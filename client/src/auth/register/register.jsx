@@ -31,7 +31,7 @@ export default function Register() {
       <div className="flex justify-center">
         <div className="w-full max-w-md">
           <h2 className="text-3xl font-semibold mb-4">Register Form</h2>
-          <form action="post" onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label htmlFor="name" className="block text-gray-700">
                 Name:
