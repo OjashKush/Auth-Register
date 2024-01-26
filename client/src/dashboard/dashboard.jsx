@@ -37,10 +37,8 @@ const Dashboard = () => {
         } catch (error) {
             console.error('Error during profile update:', error);
         }
-        fetch('/update_profile', {
-            credentials: 'include'  
-          })
     };
+    
 
     return (
         <div className="container mx-auto mt-8">

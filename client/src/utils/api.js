@@ -66,6 +66,7 @@ const apiClient = () => {
             console.error('Error during profile update:', error);
             throw error;
         }
+        
     };
 
     return {
