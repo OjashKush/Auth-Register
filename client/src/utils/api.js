@@ -44,11 +44,35 @@ const apiClient = () => {
             console.error('Error during login:', error);
             throw error;
         }
+    };   
+
+    const updateUserProfile = async (userData) => {
+        try {
+            const response = await fetch(`${url}update_profile`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userData),
+            });
+
+            if (!response.ok) {
+                throw new Error('Profile update failed');
+            }
+
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Error during profile update:', error);
+            throw error;
+        }
+        
     };
 
     return {
         registerUser,
         loginUser,
+        updateUserProfile
     };
 };
 
