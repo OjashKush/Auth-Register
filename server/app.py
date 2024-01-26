@@ -33,7 +33,6 @@ def index():
 @app.route('/register', methods=['POST'])
 def register():
     if request.method == 'POST':
-        # handle request
         data = request.get_json()
 
         if not data:
@@ -83,6 +82,39 @@ def dashboard():
             return jsonify({"user": {"name": user.name, "email": user.email}})
     
     return jsonify({"error": "Unauthorized"}), 401
+
+@app.route('/update_profile', methods=['PUT'])
+def update_profile():
+    if request.method == 'PUT':
+        if 'email' not in session:
+            return jsonify({"error": "Unauthorized"}), 401
+
+        data = request.get_json()
+
+        if not data:
+            return jsonify({"error": "Invalid JSON data"}), 400
+
+        new_name = data.get('name')
+        new_email = data.get('email')
+
+        if not new_name and not new_email:
+            return jsonify({"error": "Nothing to update"}), 400
+
+        user = User.query.filter_by(email=session['email']).first()
+
+        if user:
+            if new_name:
+                user.name = new_name
+            if new_email:
+                user.email = new_email
+
+            db.session.commit()
+
+            return jsonify({"message": "Profile updated successfully", "user": {"name": user.name, "email": user.email}})
+        else:
+            return jsonify({"error": "User not found"}), 404
+
+    return jsonify({"error": "Method Not Allowed"}), 405
 
 @app.route('/logout')
 def logout():
